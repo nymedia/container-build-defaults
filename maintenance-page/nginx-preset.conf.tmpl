@@ -1,10 +1,11 @@
 location / {
-    root /var/www/html;
-    try_files /maintenance-page.html =503;
+  return 503;
 }
 
-error_page 503 @maintenance-page;
+error_page 500 502 503 504 @maintenance-page;
+
 location @maintenance-page {
-    root /var/www/html;
-    rewrite ^(.*)$ /maintenance-page.html break;
+  root /var/www/html;
+  internal;
+  try_files /maintenance-page.html =503;
 }
