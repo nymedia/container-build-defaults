@@ -1,4 +1,4 @@
-name: Container images
+name: Build default "Maintenance Page" container
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
       id: build-and-push
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: maintenance-page/
         file: ${{ steps.dockerfile.outputs.filename }}
         build-args: |
           BASE_TAG=${{ env.BASE_TAG }}
