@@ -1,0 +1,11 @@
+########################################################################################################################
+#
+# @file
+# Drupal crontab.
+#
+# Tip: Use https://crontab.guru/ to quickly and easily get the correct schedule for your command.
+#
+########################################################################################################################
+
+# Run Drupal cron.
+*/17 * * * * drush --root=$APP_ROOT/$DOCROOT_SUBDIR core-cron
