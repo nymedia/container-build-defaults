@@ -1,0 +1,33 @@
+.git/
+.ddev/
+.docker/
+
+.github/
+.idea/
+.travis/
+
+/docker-compose*.yml
+
+/deploy/*
+/infrastructure/terraform/
+/logs/*
+
+# Additional files not required for the nginx container:
+auth.json
+config/*
+drush/*
+vendor/*
+translations/*
+
+# Non required for frontend
+*.exe
+*.diff
+*.install
+*.module
+*.php
+*.sql
+*.theme
+*.twig
+*.yml
+*.yaml
+*.zip
