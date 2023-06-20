@@ -54,7 +54,7 @@
   <div class="container">
     <header role="banner">
     {{- if getenv "NGINX_ERROR_BANNER_LOGO_BASE64" }}
-      <img class="logo" src="{{ NGINX_ERROR_BANNER_LOGO_BASE64 }}">
+      <img class="logo" src="{{ getenv "NGINX_ERROR_BANNER_LOGO_BASE64" }}">
     {{- end }}
     </header>
     <main role="main">
