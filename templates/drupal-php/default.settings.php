@@ -4,21 +4,18 @@
 $ENV_TYPE = $_SERVER['ENVIRONMENT_TYPE'] ?? 'local';
 
 /*
- * When we use containers based on the wodby/drupal-php base image some configuration is auto-generated based on environment variables.
- * This file is generated in $CONF_DIR/wodby.settings.php, so we check if this file exists and in this case we include it to set the defaults.
+ *  Load the services definitions depending on the environment.
  */
-if (isset($_SERVER['CONF_DIR'])) {
-  $settings_file =  "{$_SERVER['CONF_DIR']}/wodby.settings.php";
-  file_exists($settings_file) && include $settings_file;
-}
+$settings['container_yamls'][] = "{$app_root}/{$site_path}/services.{$ENV_TYPE}.yml";
+
 /*
- * Next we need to include the settings which are shared for all environments.
+ * Include the settings which are shared for all environments.
  */
 $settings_file = __DIR__ . '/settings-shared.php';
 file_exists($settings_file) && include $settings_file;
 
 /*
- * As last two possible overrides we include settings file based on:
+ * Next we include two possible overrides based on:
  * - environment type
  * - environment name, when defined.
  *
@@ -32,6 +29,10 @@ if ($_SERVER['ENVIRONMENT_NAME']) {
 }
 
 /*
- *  Finally we ensure the correct services definitions are loaded depending on the environment.
+ * Lastly when we use containers based on the wodby/drupal-php base image some configuration is auto-generated based on environment variables.
+ * This file is generated in $CONF_DIR/wodby.settings.php, so we check if this file exists and in this case we include it to set the defaults.
  */
-$settings['container_yamls'][] = "{$app_root}/{$site_path}/services.{$ENV_TYPE}.yml";
+if (isset($_SERVER['CONF_DIR'])) {
+  $settings_file =  "{$_SERVER['CONF_DIR']}/wodby.settings.php";
+  file_exists($settings_file) && include $settings_file;
+}
