@@ -5,6 +5,8 @@ ARG COPY_FROM=.
 ARG COPY_TO=.
 COPY --chown=1000:1000 ${COPY_FROM} ${COPY_TO}
 
+USER root
+
 # Copy Tailscale binaries from the tailscale image on Docker Hub.
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /var/runtime/tailscaled
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /var/runtime/tailscale
@@ -15,3 +17,5 @@ RUN mkdir -p /var/run && ln -s /tmp/tailscale /var/run/tailscale && \
 
 
 COPY ${COPY_FROM}/infrastructure/docker/sshd/init-tailscale /docker-entrypoint-init.d/
+
+USER wodby
