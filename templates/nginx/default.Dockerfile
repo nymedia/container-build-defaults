@@ -1,5 +1,5 @@
 ARG BASE_TAG=8-dev
-FROM wodby/drupal-php:${BASE_TAG}
+FROM wodby/nginx:${BASE_TAG}
 
 ARG COPY_FROM=.
 ARG COPY_TO=.
