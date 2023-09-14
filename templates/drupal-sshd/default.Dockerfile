@@ -16,6 +16,6 @@ RUN mkdir -p /var/run && ln -s /tmp/tailscale /var/run/tailscale && \
     mkdir -p /var/task && ln -s /tmp/tailscale /var/task/tailscale
 
 
-COPY ${COPY_FROM}/infrastructure/docker/sshd/init-tailscale /docker-entrypoint-init.d/
+COPY ${COPY_FROM}/infrastructure/docker/drupal-sshd/init-tailscale /docker-entrypoint-init.d/
 
 USER wodby
