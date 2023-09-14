@@ -1,0 +1,13 @@
+.git/
+.ddev/
+.docker/
+
+.github/
+.idea/
+.travis/
+
+/docker-compose*.yml
+
+/deploy/*
+/infrastructure/terraform/
+/logs/*
