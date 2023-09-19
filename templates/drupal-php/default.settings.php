@@ -23,9 +23,16 @@ file_exists($settings_file) && include $settings_file;
  */
 $settings_file = __DIR__ . "/settings.{$ENV_TYPE}.php";
 file_exists($settings_file) && include $settings_file;
-if ($_SERVER['ENVIRONMENT_NAME']) {
+if (!empty($_SERVER['ENVIRONMENT_NAME'])) {
   $settings_file = __DIR__ . "/settings.{$_SERVER['ENVIRONMENT_NAME']}.php";
   file_exists($settings_file) && include $settings_file;
+}
+
+/**
+ * Load environment based override configuration.
+ */
+if (file_exists($app_root . '/' . $site_path . '/settings.env.php')) {
+  include $app_root . '/' . $site_path . '/settings.env.php';
 }
 
 /*
@@ -36,3 +43,8 @@ if (isset($_SERVER['CONF_DIR'])) {
   $settings_file =  "{$_SERVER['CONF_DIR']}/wodby.settings.php";
   file_exists($settings_file) && include $settings_file;
 }
+
+/**
+ * Ensure location of the site configuration files.
+ */
+$settings["config_sync_directory"] = dirname(DRUPAL_ROOT) . '/config/common/';
