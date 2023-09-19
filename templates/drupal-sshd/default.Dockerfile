@@ -8,14 +8,12 @@ COPY --chown=1000:1000 ${COPY_FROM} ${COPY_TO}
 USER root
 
 # Copy Tailscale binaries from the tailscale image on Docker Hub.
-COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /var/runtime/tailscaled
-COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /var/runtime/tailscale
-RUN mkdir -p /var/run && ln -s /tmp/tailscale /var/run/tailscale && \
-    mkdir -p /var/cache && ln -s /tmp/tailscale /var/cache/tailscale && \
-    mkdir -p /var/lib && ln -s /tmp/tailscale /var/lib/tailscale && \
-    mkdir -p /var/task && ln -s /tmp/tailscale /var/task/tailscale
-
+COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /usr/local/bin/tailscaled
+COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /usr/local/bin/tailscale
+COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/containerboot /usr/local/bin/ts-containerboot
 
 COPY ${COPY_FROM}/infrastructure/docker/drupal-sshd/init-tailscale.sh /docker-entrypoint-init.d/
 
 USER wodby
+
+CMD [ "sleep", "infinity" ]
