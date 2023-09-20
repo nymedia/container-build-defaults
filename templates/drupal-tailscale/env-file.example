@@ -1,0 +1,3 @@
+# Update the following variables with your own values.
+TS_AUTHKEY=tskey-auth-YOUR_KEY_HERE
+TS_HOSTNAME=your-hostname-here
