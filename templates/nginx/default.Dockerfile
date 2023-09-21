@@ -1,4 +1,4 @@
-ARG BASE_TAG=8-dev
+ARG BASE_TAG=1
 FROM wodby/nginx:${BASE_TAG}
 
 ARG COPY_FROM=.
