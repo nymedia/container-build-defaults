@@ -17,7 +17,7 @@ COPY ${COPY_FROM}/infrastructure/docker/drupal-tailscale/init-tailscale.sh /dock
 # Set default values for Tailscale environment variables.
 ENV TS_USERSPACE=true
 ENV TS_AUTH_ONCE=true
-ENV TS_STATE_DIR=/tmp/tailscale
+ENV TS_STATE_DIR=/ts-state
 ENV TS_SOCKET=/var/run/tailscale/tailscaled.sock
 ENV TS_EXTRA_ARGS="--ssh"
 
@@ -29,7 +29,7 @@ RUN mkdir -p ${TS_STATE_DIR}/ $(dirname ${TS_SOCKET})/ && \
 USER wodby
 
 # Tailscale state directory should be mounted to persist across restarts.
-VOLUME "/tmp/tailscale"
+VOLUME "/ts-state"
 
 # This container is intended to be run as a sidecar to the main Drupal container.
 CMD [ "sleep", "infinity" ]
