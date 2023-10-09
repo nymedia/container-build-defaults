@@ -11,6 +11,10 @@ COPY ${COPY_FROM}/infrastructure/docker/drupal-cron/www-data.crontab /etc/cronta
 USER root
 
 # Ensure the drupal logs directory exists and is owned by the webserver user.
-RUN mkdir -p /var/www/html/logs && chown www-data:www-data /var/www/html/logs
+ARG DRUPAL_LOGS_DIR=/var/www/html/logs
+RUN set -e ;\
+  mkdir -p ${DRUPAL_LOGS_DIR} ;\
+  chown www-data:www-data ${DRUPAL_LOGS_DIR} ;\
+  chmod 775 ${DRUPAL_LOGS_DIR}
 
 USER wodby
