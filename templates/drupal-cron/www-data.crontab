@@ -8,4 +8,4 @@
 ########################################################################################################################
 
 # Run Drupal cron.
-*/17 * * * * drush --root=$APP_ROOT/$DOCROOT_SUBDIR core-cron
+*/13 * * * * drush --root=$APP_ROOT/$DOCROOT_SUBDIR core-cron
