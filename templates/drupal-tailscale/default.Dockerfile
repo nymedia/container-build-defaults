@@ -7,6 +7,13 @@ COPY --chown=1000:1000 ${COPY_FROM} ${COPY_TO}
 
 USER root
 
+# Ensure the drupal logs directory exists and is owned by the webserver user.
+ARG DRUPAL_LOGS_DIR=/var/www/html/logs
+RUN set -e ;\
+  mkdir -p ${DRUPAL_LOGS_DIR} ;\
+  chown www-data:www-data ${DRUPAL_LOGS_DIR} ;\
+  chmod 775 ${DRUPAL_LOGS_DIR}
+
 # Copy Tailscale binaries from the tailscale image on Docker Hub.
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /usr/local/bin/tailscaled
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /usr/local/bin/tailscale
