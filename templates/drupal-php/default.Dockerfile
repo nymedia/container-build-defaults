@@ -1,5 +1,6 @@
 ARG BASE_TAG=8-dev
-FROM wodby/drupal-php:${BASE_TAG}
+ARG BASE_IMAGE=wodby/drupal-php
+FROM ${BASE_IMAGE}:${BASE_TAG}
 
 ARG COPY_FROM=.
 ARG COPY_TO=.

@@ -1,5 +1,6 @@
 ARG BASE_TAG=1
-FROM wodby/nginx:${BASE_TAG}
+ARG BASE_IMAGE=wodby/nginx
+FROM ${BASE_IMAGE}:${BASE_TAG}
 
 ARG COPY_FROM=.
 ARG COPY_TO=.
