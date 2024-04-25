@@ -9,6 +9,17 @@ COPY --chown=1000:1000 ${COPY_FROM} ${COPY_TO}
 # Copy the required crontab file
 COPY ${COPY_FROM}/infrastructure/docker/drupal-cron/www-data.crontab /etc/crontabs/www-data
 
+# Define our default values for environment variables, those can be overridden at runtime.
+ENV FILES_DIR=/mnt/files
+ENV APP_ROOT=/var/www/html
+ENV DOCROOT_SUBDIR=drupal
+
+ENV DRUPAL_SITE=default
+ENV DRUPAL_ROOT=${APP_ROOT}/${DRUPAL_ROOT}
+ENV DRUPAL_SITE_DIR=$(DRUPAL_ROOT)/sites/$(DRUPAL_SITE)
+ENV DRUPAL_FILES_DIR=${DRUPAL_SITE_DIR}/files
+ENV DRUPAL_FILES_SYNC_SALT=not-in-use-but-required
+
 USER root
 
 # Ensure the drupal logs directory exists and is owned by the webserver user.
