@@ -24,8 +24,8 @@ ENV DRUPAL_PHP_STORAGE_DIR=/tmp/php
 # having to run the script every time the container is started, we do it here for
 # the default location.
 RUN set -e ;\
-  rm -rf "${DRUPAL_SITE_DIR}/files" ;\
-  ln -s "${FILES_DIR}/public" "${DRUPAL_SITE_DIR}/files"
+  rm -rvf "${DRUPAL_FILES_DIR}" ;\
+  ln -vs "${FILES_DIR}/public" "${DRUPAL_FILES_DIR}"
 
 USER root
 
