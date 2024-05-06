@@ -19,6 +19,16 @@ ENV DRUPAL_ROOT=${APP_ROOT}/${DRUPAL_ROOT}
 ENV DRUPAL_SITE_DIR=$(DRUPAL_ROOT)/sites/$(DRUPAL_SITE)
 ENV DRUPAL_FILES_DIR=${DRUPAL_SITE_DIR}/files
 ENV DRUPAL_FILES_SYNC_SALT=not-in-use-but-required
+ENV DRUPAL_PHP_STORAGE_DIR=/tmp/php
+
+# Creates a symlink to the default location where the persistent files are stored.
+#
+# This is usually done at runtime by calling the makefiles script, but to avoid
+# having to run the script every time the container is started, we do it here for
+# the default location.
+RUN set -e ;\
+  rm -rf "${DRUPAL_SITE_DIR}/files" ;\
+  ln -s "${FILES_DIR}/public" "${DRUPAL_SITE_DIR}/files"
 
 USER root
 
@@ -28,5 +38,9 @@ RUN set -e ;\
   mkdir -p ${DRUPAL_LOGS_DIR} ;\
   chown www-data:www-data ${DRUPAL_LOGS_DIR} ;\
   chmod 775 ${DRUPAL_LOGS_DIR}
+
+# Ensure the PHP storage directory exists and it is owned by the webserver user
+RUN  mkdir ${DRUPAL_PHP_STORAGE_DIR} ;\
+  chown -R www-data:www-data ${DRUPAL_PHP_STORAGE_DIR}
 
 USER wodby
