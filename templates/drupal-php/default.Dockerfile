@@ -7,11 +7,16 @@ ARG COPY_TO=.
 COPY --chown=1000:1000 ${COPY_FROM} ${COPY_TO}
 
 # Define our default values for environment variables, those can be overridden at runtime.
-ENV FILES_DIR=/mnt/files
-ENV APP_ROOT=/var/www/html
-ENV DOCROOT_SUBDIR=drupal
+ARG FILES_DIR=/mnt/files
+ARG APP_ROOT=/var/www/html
+ARG DOCROOT_SUBDIR=drupal
+ARG DRUPAL_SITE=default
 
-ENV DRUPAL_SITE=default
+ENV FILES_DIR=${FILES_DIR}
+ENV APP_ROOT=${APP_ROOT}
+ENV DOCROOT_SUBDIR=${DOCROOT_SUBDIR}
+
+ENV DRUPAL_SITE=${DRUPAL_SITE}
 ENV DRUPAL_ROOT=${APP_ROOT}/${DOCROOT_SUBDIR}
 ENV DRUPAL_SITE_DIR=${DRUPAL_ROOT}/sites/${DRUPAL_SITE}
 ENV DRUPAL_FILES_DIR=${DRUPAL_SITE_DIR}/files
