@@ -37,7 +37,15 @@ COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /usr/
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /usr/local/bin/tailscale
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/containerboot /usr/local/bin/ts-containerboot
 
-COPY ${COPY_FROM}/infrastructure/docker/drupal-tailscale/init-tailscale.sh /docker-entrypoint-init.d/
+ARG TAILSCALE_STARTUP_SCRIPT="${COPY_FROM}/infrastructure/docker/drupal-tailscale/init-tailscale.sh"
+ADD --chmod=755 "${TAILSCALE_STARTUP_SCRIPT}" /docker-entrypoint-init.d/
+
+#
+# Temporary entrypoint script to handle env variables.
+#
+# Required until this is solved https://github.com/tailscale/tailscale/issues/12395
+ARG SAVE_ENV_SCRIPT_URL=https://raw.githubusercontent.com/nymedia/container-build-defaults/1.x/templates/drupal-tailscale/save-env.sh
+ADD --chmod=755 "${SAVE_ENV_SCRIPT_URL}" /docker-entrypoint-init.d/
 
 # Set default values for Tailscale environment variables.
 ENV TS_USERSPACE=true
