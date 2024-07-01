@@ -49,3 +49,6 @@ RUN  mkdir ${DRUPAL_PHP_STORAGE_DIR} ;\
   chown -R www-data:www-data ${DRUPAL_PHP_STORAGE_DIR}
 
 USER wodby
+
+# Start the cron daemon
+CMD [ "sudo", "-E", "crond", "-f", "-d", "0" ]
