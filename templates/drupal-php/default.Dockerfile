@@ -23,6 +23,9 @@ ENV DRUPAL_FILES_DIR=${DRUPAL_SITE_DIR}/files
 ENV DRUPAL_FILES_SYNC_SALT=not-in-use-but-required
 ENV DRUPAL_PHP_STORAGE_DIR=/tmp/php
 
+# The following can be set (at runtime) to 'auto' to deploy changes automatically
+ENV DRUPAL_DEPLOY_CHANGES=manual
+
 # Creates a symlink to the default location where the persistent files are stored.
 #
 # This is usually done at runtime by calling the makefiles script, but to avoid
@@ -33,6 +36,13 @@ RUN set -e ;\
   ln -vs "${FILES_DIR}/public" "${DRUPAL_FILES_DIR}"
 
 USER root
+
+# Copy any init script specific to the application
+RUN set -e ;\
+  test -d "${APP_ROOT}/infrastructure/docker/drupal-php/init.d/" && \
+  cp -v "${APP_ROOT}/infrastructure/docker/drupal-php/init.d/"* /docker-entrypoint-init.d/ ;\
+  chmod -c +x /docker-entrypoint-init.d/*
+
 
 # Ensure the drupal logs directory exists and is owned by the webserver user.
 ARG DRUPAL_LOGS_DIR=/var/www/html/logs
