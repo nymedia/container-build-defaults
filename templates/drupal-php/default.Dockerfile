@@ -34,6 +34,11 @@ RUN set -e ;\
 
 USER root
 
+# Install FTP extension
+RUN set -e \
+  && apk add --no-cache openssl-dev \
+  && docker-php-ext-install ftp
+
 # Ensure the drupal logs directory exists and is owned by the webserver user.
 ARG DRUPAL_LOGS_DIR=/var/www/html/logs
 RUN set -e ;\
